@@ -17,7 +17,8 @@ EXP-MSD-TU-2025
 | v1.1   | 24/11/2025 | Inclusão das tabelas GQM e métricas |
 | v1.2   | 27/11/2025 | Inclusão das seções de modelo conceitual, variáveis e desenho experimental |
 | v1.3   | 28/11/2025 | Ajustes conceituais alinhados ao trade-off entre lead time e qualidade |
-| v1.4   | 29/11/2025 | Revisão final com integração dos diagramas conceitual e experimental |
+| v1.4   | 28/11/2025 | Revisão final com integração dos diagramas conceitual e experimental |
+| v1.5   | 29/11/2025 | Inclusão de dados Pré-execução |
 
 ### 1.4 Datas  
 
@@ -223,8 +224,32 @@ O experimento considera dois grupos de desenvolvimento, um sob tratamento T0 e o
 <img width="1146" height="372" alt="image" src="https://github.com/user-attachments/assets/264c0a2b-f460-4973-882c-3fcb7e03ab6c" />
 <img width="443" height="547" alt="image" src="https://github.com/user-attachments/assets/1b0a63bc-cc00-4efb-b045-fc561facbce7" />
 
+## 10. População, Sujeitos e Amostragem
+
+A população-alvo deste experimento é composta por desenvolvedores de software distribuídos em três níveis de senioridade: júnior, pleno e sênior. A seleção dos participantes utiliza um processo de amostragem aleatória estratificada, no qual cada nível de senioridade representa um estrato distinto.
+
+Primeiro, os desenvolvedores são organizados nesses três estratos; em seguida, realiza-se um sorteio aleatório dentro de cada estrato para determinar quais profissionais participarão do experimento. Após essa etapa de seleção, procede-se à alocação aleatória balanceada, garantindo que ambos os grupos experimentais contenham exatamente um desenvolvedor sênior, um pleno e um júnior.
+
+Essa abordagem mantém equivalência entre as equipes, reduz a influência de diferenças individuais de habilidade ou experiência e permite isolar o efeito do fator experimental a presença ou ausência de testes unitários obrigatórios sobre as variáveis observadas.
+
+Como ambos os grupos implementam o mesmo backlog em três sprints e sob condições controladas, a amostra é suficiente para comparar métricas de desempenho, qualidade e percepção ao longo das etapas do experimento.
+
+## 11. Instrumentação e Protocolo Operacional
+
+O experimento utiliza um repositório Git como ambiente central para versionamento de código e execução automática das pipelines. O Pytest é a ferramenta obrigatória para o grupo tratamento, com coleta de cobertura via pytest-cov. As pipelines são responsáveis por executar build, rodar testes e registrar logs estruturados contendo métricas como tempo de execução, sucesso ou falha, timestamps e cobertura, quando aplicável.
+
+O protocolo operacional inicia com a preparação do repositório, criação dos microserviços Python e configuração das pipelines no GitHub Actions. Cada funcionalidade implementada em uma sprint deve ser desenvolvida em uma branch específica, permitindo identificar claramente o início e o fim do lead time por funcionalidade. A equipe controle realiza apenas as etapas de desenvolvimento e build, enquanto o grupo tratamento executa automaticamente testes unitários e valida a cobertura mínima de 70%.
+
+Os logs gerados são enviados para um banco relacional, constituindo o repositório de dados do experimento. Cada registro contém identificadores da sprint, funcionalidade, commit, desenvolvedor responsável, métricas de pipeline e indicadores de erros pós-deploy. Após cada sprint, os dados são consolidados e validados para garantir integridade, consistência e ausência de registros duplicados.
+## 12. Plano de Análise de Dados (Pré-Execução)
+
+A análise dos dados será conduzida em três etapas. A primeira etapa consiste na preparação dos dados, envolvendo limpeza, normalização, identificação de inconsistências e remoção de outliers quando justificável. Os registros do banco relacional serão exportados para um ambiente de análise, como um script Python , onde serão aplicadas técnicas estatísticas adequadas.
+
+A segunda etapa compreende a comparação estatística entre os grupos controle e tratamento. Para métricas contínuas, como lead time, tempo de pipeline e variabilidade, será aplicado o teste de Mann–Whitney, adequado para distribuições que não assumem normalidade. Para métricas discretas, como número de falhas de pipeline e incidentes pós-deploy, será utilizado o teste Qui-quadrado. Cada hipótese definida previamente em H0/H1 será avaliada considerando um nível de significância de 5%.
+
+A terceira etapa envolve interpretação dos resultados à luz do modelo conceitual. Se houver aumento significativo no lead time mas redução significativa nos defeitos e na instabilidade da pipeline, o trade-off esperado será confirmado. Também serão analisados os dados qualitativos de percepção coletados junto aos desenvolvedores, integrando métricas subjetivas e métricas objetivas. A análise final consolidará os achados, destacará padrões observados e relacionará os resultados às hipóteses e às ameaças à validade.
+
+## 13. Fluxograma Textual do Passo a Passo do Experimento
+<img width="496" height="694" alt="image" src="https://github.com/user-attachments/assets/8f1fffb7-ce9c-4280-8218-97491dac89ad" />
 
 
-    P1 --> BD[(Banco Relacional)]
-    P2 --> BD
-    P3 --> BD
