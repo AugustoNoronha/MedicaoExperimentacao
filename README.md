@@ -250,40 +250,96 @@ A segunda etapa compreende a comparação estatística entre os grupos controle 
 
 A terceira etapa envolve interpretação dos resultados à luz do modelo conceitual. Se houver aumento significativo no lead time mas redução significativa nos defeitos e na instabilidade da pipeline, o trade-off esperado será confirmado. Também serão analisados os dados qualitativos de percepção coletados junto aos desenvolvedores, integrando métricas subjetivas e métricas objetivas. A análise final consolidará os achados, destacará padrões observados e relacionará os resultados às hipóteses e às ameaças à validade.
 
-# 13. Avaliação de Validade 
+# 13. Avaliação da Validade
+
+Nesta seção, identificamos e abordamos as principais ameaças à validade do experimento, garantindo que as conclusões sobre o impacto da adoção de testes unitários obrigatórios sejam robustas e bem fundamentadas.
+
+---
 
 ## 13.1 Validade de Conclusão
-As principais ameaças concentram-se no tamanho reduzido da amostra, que limita o poder estatístico e aumenta a probabilidade de resultados inconclusivos ou efeitos não detectados. Variações de desempenho da infraestrutura (Railway e GitHub Actions) podem introduzir ruído nas medições de tempo de pipeline, reduzindo a precisão das estimativas. Inconsistências nos logs, falhas de coleta ou registros incompletos também podem comprometer a confiabilidade dos dados.
 
-Para mitigar essas ameaças, serão adotados procedimentos rigorosos de limpeza e verificação dos dados, bem como padronização prévia da infraestrutura antes do início das sprints. Os testes estatísticos aplicados (Mann–Whitney para variáveis contínuas e Qui-quadrado para variáveis discretas) são adequados ao tamanho da amostra e não dependem de pressupostos fortes de normalidade, reduzindo o risco de interpretações equivocadas.
+A validade de conclusão se concentra em garantir que as inferências estatísticas entre o tratamento (Testes Unitários) e os resultados observados sejam corretas. As principais ameaças são:
+
+* Tamanho Reduzido da Amostra: O número limitado de participantes e grupos reduz o poder estatístico, aumentando o risco de resultados inconclusivos (Erro Tipo II) ou de não detectar um efeito real.
+* Ruído da Infraestrutura: Variações de desempenho de serviços externos (Railway e GitHub Actions) podem introduzir ruído nas medições de tempo de pipeline e build, reduzindo a precisão das estimativas de tempo.
+* Inconsistências nos Dados: A confiabilidade das conclusões depende da integridade dos dados, que pode ser comprometida por falhas de coleta, registros incompletos ou inconsistências nos logs.
+
+### 13.1.1 Estratégias de Mitigação: Padronização e Limpeza
+
+A mitigação envolve a padronização rigorosa da infraestrutura antes do início das sprints e a aplicação de procedimentos de limpeza e verificação dos dados.
+
+### 13.1.2 Estratégias de Mitigação: Testes Estatísticos
+
+Para lidar com a amostra reduzida, serão empregados testes estatísticos não paramétricos, que são adequados ao tamanho da amostra e não dependem do pressuposto de normalidade dos dados: Mann–Whitney para variáveis contínuas e Qui-quadrado para variáveis discretas.
+
+---
 
 ## 13.2 Validade Interna
-Diferenças individuais de habilidade entre os desenvolvedores, mesmo dentro da mesma senioridade, podem influenciar diretamente os resultados. O efeito de aprendizagem ao longo das sprints também pode alterar o desempenho, assim como interrupções externas, como instabilidades em serviços de hospedagem ou integrações usadas na pipeline, que podem modificar artificialmente o tempo de execução de builds e testes.
 
-Essas ameaças são mitigadas por meio de amostragem aleatória estratificada, que reduz vieses de seleção; backlog idêntico e tarefas equivalentes entre os grupos; manutenção da mesma ordem de implementação; ambiente e ferramentas padronizados; e registro estruturado de quaisquer ocorrências inesperadas. Esses controles permitem reduzir causas alternativas e melhorar a interpretação causal dos resultados.
+A validade interna garante que o efeito observado é, de fato, causado pela variável independente (obrigatoriedade de testes) e não por fatores de confusão não controlados. As ameaças primárias são:
+
+* Diferenças Individuais de Habilidade: Variações na habilidade e produtividade entre desenvolvedores, mesmo dentro do mesmo nível de senioridade, podem influenciar o tempo de entrega e a qualidade do código.
+* Efeito de Aprendizagem: O desempenho das equipes pode melhorar ao longo das sprints devido à familiaridade crescente com o código-base ou o ambiente técnico, confundindo o efeito do tratamento.
+* Interrupções Externas: Instabilidades inesperadas em serviços de hospedagem ou integrações podem alterar artificialmente as métricas de tempo de execução (builds e testes).
+
+### 13.2.1 Estratégias de Mitigação: Controle de Grupos
+
+O desenho experimental busca isolar o efeito do tratamento por meio de amostragem aleatória estratificada, que garante o equilíbrio de senioridade entre os grupos (sênior, pleno, júnior) para reduzir vieses de seleção.
+
+### 13.2.2 Estratégias de Mitigação: Controle de Tarefas e Ambiente
+
+Será utilizado backlog idêntico, tarefas equivalentes e manutenção da mesma ordem de implementação para ambos os grupos. O ambiente técnico e as ferramentas serão padronizados.
+
+### 13.2.3 Estratégias de Mitigação: Registro de Ocorrências
+
+Será realizado um registro estruturado de quaisquer ocorrências ou interrupções inesperadas (instabilidades em serviços, falhas de rede) que possam impactar as medições.
+
+---
 
 ## 13.3 Validade de Constructo
-Algumas métricas podem não representar integralmente os conceitos avaliados. A cobertura de testes, mesmo com valor mínimo de 70%, não garante qualidade dos testes escritos. As medidas subjetivas de percepção podem sofrer influência de vieses individuais, diferenças de interpretação e variação no rigor das respostas. Métricas operacionais como lead time e variabilidade de pipeline podem refletir fatores técnicos externos não relacionados diretamente ao constructo “impacto da adoção de testes unitários”.
 
-A mitigação ocorre por meio de definições operacionais claras para cada variável, coleta automatizada de métricas para eliminar interferência humana, padronização dos questionários de percepção e uso consistente das mesmas escalas e formulários para todos os participantes. Isso reduz ambiguidades e fortalece o alinhamento entre o construto teórico e sua medição.
+A validade de constructo trata da adequação das métricas operacionais para representar os conceitos teóricos que se deseja medir (e.g., Qualidade, Confiança, Lead Time). As ameaças incluem a sub-representação dos conceitos:
+
+* Cobertura $\neq$ Qualidade: A meta mínima de cobertura de testes (70%) é uma métrica estrutural que não garante a qualidade ou eficácia dos testes unitários escritos.
+* Viés em Métricas Subjetivas: As medidas de percepção (Confiança, Clareza e Motivação) podem ser vulneráveis a vieses individuais e diferenças de interpretação na escala Likert.
+* Ruído em Métricas Operacionais: O lead time e a variabilidade da pipeline podem refletir ruído técnico externo não relacionado ao constructo principal do "impacto da adoção de testes unitários".
+
+### 13.3.1 Estratégias de Mitigação: Definição e Coleta
+
+A mitigação é alcançada pelo fortalecimento do alinhamento entre o conceito teórico e sua medição por meio de definições operacionais claras para cada variável.
+
+### 13.3.2 Estratégias de Mitigação: Padronização de Instrumentos
+
+Será utilizada a coleta automatizada de métricas para eliminar a interferência humana e a aplicação consistente dos mesmos questionários, escalas e formulários para todos os participantes.
+
+---
 
 ## 13.4 Validade Externa
-Os resultados podem não se generalizar para sistemas maiores, equipes numerosas ou ambientes corporativos que utilizam pipelines mais complexas e possuem requisitos rigorosos de governança. O experimento é conduzido em um ambiente controlado, com uma aplicação de complexidade moderada e infraestrutura simplificada, o que limita a extrapolação para domínios críticos, aplicações em larga escala ou arquiteturas altamente distribuídas.
 
-A generalização deverá ser restrita a cenários semelhantes ao experimento: pequenos times, microserviços de baixa complexidade, pipelines leves e adoção disciplinada de testes unitários. Diferenças significativas de contexto serão explicitadas no relatório final.
+A validade externa refere-se à capacidade de generalizar os resultados do experimento para outros contextos, sistemas ou populações de desenvolvedores.
 
+* Limitação do Contexto: O experimento é conduzido em um ambiente controlado, utilizando uma aplicação de complexidade moderada (lista de tarefas) e infraestrutura simplificada.
+* Escopo Reduzido: Os resultados podem não se generalizar para sistemas enterprise maiores, equipes numerosas, pipelines de CI/CD complexas ou arquiteturas altamente distribuídas.
+* Especificidade Tecnológica: O foco em microserviços Python e na ferramenta Pytest restringe a extrapolação para outras linguagens ou ecossistemas de testes.
+
+### 13.4.1 Estratégias de Mitigação: Delimitação Explícita
+
+A generalização deve ser explicitamente restrita a cenários que compartilham as características do experimento: times pequenos, microserviços de baixa complexidade, pipelines leves e adoção disciplinada de testes unitários.
+
+### 13.4.2 Estratégias de Mitigação: Interpretação Restrita
+
+As diferenças significativas de contexto em relação ao ambiente de produção (enterprise) serão detalhadas e delimitadas no relatório final, restringindo a interpretação a cenários similares.
+
+---
 
 ## 13.5 Resumo das Ameaças e Estratégias de Mitigação
 
 | Tipo de Validade | Ameaças Principais | Estratégias de Mitigação |
-|------------------|--------------------|---------------------------|
-| Conclusão | Amostra pequena; ruído da infraestrutura; inconsistências nos dados | Testes estatísticos adequados; limpeza e verificação; padronização da infraestrutura |
-| Interna | Diferenças individuais; efeito de aprendizagem; falhas externas | Amostragem estratificada; tarefas equivalentes; ambiente padronizado; registro de ocorrências |
-| Constructo | Métricas incompletas; viés subjetivo; cobertura não representar qualidade real | Definições operacionais claras; coleta automatizada; questionários padronizados |
-| Externa | Baixa generalização para projetos maiores ou ambientes corporativos | Delimitação clara do escopo; interpretação restrita a cenários similares |
-
-
-
+|---|---|---|
+| Conclusão | Amostra pequena; Ruído da infraestrutura/tempo; Inconsistências de dados | Testes estatísticos robustos (Mann-Whitney, Qui-quadrado); Padronização e Limpeza de Dados |
+| Interna | Diferenças de habilidade individual; Efeito de aprendizado; Instabilidades externas | Amostragem Estratificada; Backlog/Tarefas Equivalentes; Registro de Ocorrências e Ambiente Padronizado |
+| Constructo | Cobertura $\neq$ Qualidade de Teste; Viés em Métricas Subjetivas; Ruído em Métricas Operacionais | Definições Operacionais Claras; Coleta Automatizada; Padronização de Questionários |
+| Externa | Baixa Generalização para Projetos Maiores, Outras Arquiteturas ou Linguagens | Delimitação Explícita do Escopo; Interpretação Restrita a Cenários Similares |
 ## 14. Ética, Privacidade e Conformidade
 
 ### 14.1 Questões Éticas
