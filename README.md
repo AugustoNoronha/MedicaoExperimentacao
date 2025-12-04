@@ -19,11 +19,12 @@ EXP-MSD-TU-2025
 | v1.3   | 28/11/2025 | Ajustes conceituais alinhados ao trade-off entre lead time e qualidade |
 | v1.4   | 28/11/2025 | Revisão final com integração dos diagramas conceitual e experimental |
 | v1.5   | 29/11/2025 | Inclusão de dados Pré-execução |
+| v1.6   | 04/12/2025 | Inclusão de ameaças a validade |
 
 ### 1.4 Datas  
 
 Criação do plano: 23/11/2025  
-Última atualização: 29/11/2025  
+Última atualização: 04/12/2025  
 
 ### 1.5 Autores  
 
@@ -249,7 +250,135 @@ A segunda etapa compreende a comparação estatística entre os grupos controle 
 
 A terceira etapa envolve interpretação dos resultados à luz do modelo conceitual. Se houver aumento significativo no lead time mas redução significativa nos defeitos e na instabilidade da pipeline, o trade-off esperado será confirmado. Também serão analisados os dados qualitativos de percepção coletados junto aos desenvolvedores, integrando métricas subjetivas e métricas objetivas. A análise final consolidará os achados, destacará padrões observados e relacionará os resultados às hipóteses e às ameaças à validade.
 
-## 13. Fluxograma Textual do Passo a Passo do Experimento
-<img width="496" height="694" alt="image" src="https://github.com/user-attachments/assets/8f1fffb7-ce9c-4280-8218-97491dac89ad" />
+# 13. Avaliação de Validade 
+
+## 13.1 Validade de Conclusão
+As principais ameaças concentram-se no tamanho reduzido da amostra, que limita o poder estatístico e aumenta a probabilidade de resultados inconclusivos ou efeitos não detectados. Variações de desempenho da infraestrutura (Railway e GitHub Actions) podem introduzir ruído nas medições de tempo de pipeline, reduzindo a precisão das estimativas. Inconsistências nos logs, falhas de coleta ou registros incompletos também podem comprometer a confiabilidade dos dados.
+
+Para mitigar essas ameaças, serão adotados procedimentos rigorosos de limpeza e verificação dos dados, bem como padronização prévia da infraestrutura antes do início das sprints. Os testes estatísticos aplicados (Mann–Whitney para variáveis contínuas e Qui-quadrado para variáveis discretas) são adequados ao tamanho da amostra e não dependem de pressupostos fortes de normalidade, reduzindo o risco de interpretações equivocadas.
+
+## 13.2 Validade Interna
+Diferenças individuais de habilidade entre os desenvolvedores, mesmo dentro da mesma senioridade, podem influenciar diretamente os resultados. O efeito de aprendizagem ao longo das sprints também pode alterar o desempenho, assim como interrupções externas, como instabilidades em serviços de hospedagem ou integrações usadas na pipeline, que podem modificar artificialmente o tempo de execução de builds e testes.
+
+Essas ameaças são mitigadas por meio de amostragem aleatória estratificada, que reduz vieses de seleção; backlog idêntico e tarefas equivalentes entre os grupos; manutenção da mesma ordem de implementação; ambiente e ferramentas padronizados; e registro estruturado de quaisquer ocorrências inesperadas. Esses controles permitem reduzir causas alternativas e melhorar a interpretação causal dos resultados.
+
+## 13.3 Validade de Constructo
+Algumas métricas podem não representar integralmente os conceitos avaliados. A cobertura de testes, mesmo com valor mínimo de 70%, não garante qualidade dos testes escritos. As medidas subjetivas de percepção podem sofrer influência de vieses individuais, diferenças de interpretação e variação no rigor das respostas. Métricas operacionais como lead time e variabilidade de pipeline podem refletir fatores técnicos externos não relacionados diretamente ao constructo “impacto da adoção de testes unitários”.
+
+A mitigação ocorre por meio de definições operacionais claras para cada variável, coleta automatizada de métricas para eliminar interferência humana, padronização dos questionários de percepção e uso consistente das mesmas escalas e formulários para todos os participantes. Isso reduz ambiguidades e fortalece o alinhamento entre o construto teórico e sua medição.
+
+## 13.4 Validade Externa
+Os resultados podem não se generalizar para sistemas maiores, equipes numerosas ou ambientes corporativos que utilizam pipelines mais complexas e possuem requisitos rigorosos de governança. O experimento é conduzido em um ambiente controlado, com uma aplicação de complexidade moderada e infraestrutura simplificada, o que limita a extrapolação para domínios críticos, aplicações em larga escala ou arquiteturas altamente distribuídas.
+
+A generalização deverá ser restrita a cenários semelhantes ao experimento: pequenos times, microserviços de baixa complexidade, pipelines leves e adoção disciplinada de testes unitários. Diferenças significativas de contexto serão explicitadas no relatório final.
+
+
+## 13.5 Resumo das Ameaças e Estratégias de Mitigação
+
+| Tipo de Validade | Ameaças Principais | Estratégias de Mitigação |
+|------------------|--------------------|---------------------------|
+| Conclusão | Amostra pequena; ruído da infraestrutura; inconsistências nos dados | Testes estatísticos adequados; limpeza e verificação; padronização da infraestrutura |
+| Interna | Diferenças individuais; efeito de aprendizagem; falhas externas | Amostragem estratificada; tarefas equivalentes; ambiente padronizado; registro de ocorrências |
+| Constructo | Métricas incompletas; viés subjetivo; cobertura não representar qualidade real | Definições operacionais claras; coleta automatizada; questionários padronizados |
+| Externa | Baixa generalização para projetos maiores ou ambientes corporativos | Delimitação clara do escopo; interpretação restrita a cenários similares |
+
+
+
+## 14. Ética, Privacidade e Conformidade
+
+### 14.1 Questões Éticas
+
+O principal risco ético identificado neste experimento é o de **exposição involuntária do desempenho individual dos participantes**. Como métricas como lead time, número de defeitos, falhas de pipeline e outros indicadores técnicos são coletadas automaticamente, existe a possibilidade de que participantes se sintam avaliados, julgados ou comparados entre si, mesmo que o experimento não tenha finalidade de medir produtividade pessoal.
+
+Esse tipo de risco é relevante mesmo em ambientes neutros ou voluntários, pois desenvolvedores podem interpretar os resultados como reflexo direto de suas habilidades. Para mitigar esse risco, todas as métricas serão tratadas de forma anonimizada, associadas apenas a identificadores internos e nunca aos nomes reais dos participantes. Resultados individuais não serão divulgados; somente dados agregados por grupo serão analisados e apresentados.
+
+Além disso, todos os participantes serão informados previamente de que o objetivo do experimento é avaliar práticas de desenvolvimento com ou sem testes unitários, e não avaliar desempenho ou habilidade de cada indivíduo. Os participantes poderão solicitar a remoção de sua identificação a qualquer momento, reforçando que sua participação é totalmente voluntária e não implica qualquer forma de avaliação pessoal.
+
+### 14.2 Consentimento Informado
+Antes do início das atividades, todos os participantes receberão um documento de explicação contendo:  
+• o objetivo do experimento  
+• os procedimentos envolvidos  
+• os riscos e benefícios potenciais  
+• o tipo de dados coletados  
+• como esses dados serão analisados  
+• como sua identidade será preservada  
+• o direito de desistência a qualquer momento  
+
+Após a leitura desse documento, os participantes deverão registrar seu consentimento informado por meio de um formulário digital, confirmando que compreenderam todas as informações e concordam voluntariamente em participar. Esse consentimento será armazenado de forma segura para fins de auditoria e transparência metodológica.
+
+### 14.3 Privacidade e Proteção de Dados
+O experimento coleta apenas dados técnicos relacionados ao desenvolvimento, tais como:  
+• timestamps de commits  
+• tempos de pipeline  
+• métricas de testes  
+• cobertura  
+• falhas de execução  
+• quantidade e severidade de defeitos  
+
+Nenhum dado pessoal sensível será coletado. A única informação identificável é o nome ou identificador de usuário no repositório Git, utilizado exclusivamente para associar commits às funcionalidades. Esses identificadores serão anonimizados durante a análise, substituídos por códigos numericos, impedindo a associação direta entre dados e indivíduos.  
+O banco relacional utilizado para armazenar as métricas ficará protegido por autenticação, controle de acesso e criptografia em repouso. Os dados serão mantidos por até 12 meses após o término do experimento exclusivamente para fins de auditoria e replicação, sendo posteriormente removidos de forma segura.
+
+### 14.4 Aprovações Necessárias
+
+Como o experimento não é conduzido em ambiente acadêmico nem profissional formal, não há necessidade de submissão a comitês institucionais de ética ou aprovação de órgãos jurídicos internos. No entanto, para garantir transparência e responsabilidade no tratamento dos dados, o estudo seguirá as diretrizes gerais de ética em pesquisa com seres humanos e as boas práticas de proteção de dados definidas pela LGPD.
+
+Os participantes serão informados sobre os procedimentos, riscos e formas de proteção de dados antes do início do experimento, e sua participação ocorrerá somente após o registro de consentimento informado. Não há outras aprovações externas obrigatórias para a realização deste estudo.
+
+## 15. Recursos, Infraestrutura e Orçamento
+
+### 15.1 Recursos Humanos e Papéis
+
+O experimento contará com um grupo reduzido de participantes e funções claramente definidas para garantir organização e rastreabilidade. Os papéis são distribuídos da seguinte forma:
+
+• Pesquisador responsável : conduz o experimento, elabora o plano, organiza os dados, supervisiona a execução das sprints, consolida as métricas e realiza a análise estatística.  
+• Desenvolvedores participantes (6 no total)– distribuídos em dois grupos, cada qual composto por um desenvolvedor sênior, um pleno e um júnior. São responsáveis por implementar as funcionalidades conforme o backlog, interagir com o repositório Git e acionar as pipelines que geram os dados analisados.  
+• Apoio técnico opcional: responsável pela configuração inicial do ambiente, incluindo criação do repositório, configuração das pipelines de CI/CD e integração com o banco de dados. Se necessário, também presta suporte durante a coleta automática de métricas.
+
+Todos os participantes atuam de forma independente no desenvolvimento, e nenhum deles é avaliado individualmente.
+
+### 15.2 Infraestrutura Técnica Necessária
+
+Para garantir a execução uniforme e reprodutível do experimento, é necessária a seguinte infraestrutura:
+
+• Repositório Git para versionamento e registro dos commits.  
+• Pipeline de CI/CD configurada em GitHub Actions, com execução automática a cada commit.  
+• Ambiente de execução Python padronizado, com dependências definidas em `requirements.txt`.  
+• Ferramentas de teste: Pytest, exclusivamente.  
+• Banco relacional para armazenar registros das execuções das pipelines: PostgreSQL.  
+• Servidor simples para hospedar os microserviços Python em homologação, permitindo detecção de defeitos pós-deploy.  
+• Acesso a máquinas de desenvolvimento equivalentes entre os participantes, garantindo condições homogêneas.  
+
+Toda a infraestrutura pode ser disponibilizada localmente ou em ambiente em nuvem, desde que mantenha consistência entre os grupos.
+
+### 15.3 Materiais e Insumos
+
+Antes do início do experimento, é necessário disponibilizar os seguintes materiais:
+
+• Máquinas de desenvolvimento com Python 3 instalado .  
+• Licenças ou acessos gratuitos às ferramentas que serão utilizadas utilizadas.  
+• Templates de backlog e checklist por funcionalidade para padronizar a execução das sprints.  
+• Formulário digital de consentimento informado.  
+• Scripts auxiliares para coleta e transformação dos logs de pipeline.  
+• Estrutura inicial dos microserviços Python de forma que o projeto base seja idêntico para ambas as equipes.  
+
+Não há necessidade de materiais físicos, dispositivos especializados ou aquisições de software proprietários.
+
+### 15.4 Orçamento e Custos Estimados
+
+O experimento utiliza ferramentas essencialmente gratuitas, o que reduz significativamente o custo total. A participação dos desenvolvedores é voluntária e não envolve pagamentos ou compensações financeiras. Dessa forma, os custos diretos concentram-se apenas na infraestrutura necessária para execução do experimento.
+
+Os custos previstos são:
+
+• Hospedagem dos microserviços no Railway: será utilizado um plano básico pago para manter os serviços acessíveis durante as sprints e possibilitar a coleta de dados e detecção de defeitos pós-deploy. Este é o principal custo operacional do experimento.  
+• Infraestrutura de CI/CD no GitHub Actions: a camada gratuita é suficiente para o volume esperado de execuções, não havendo previsão de custos adicionais.  
+• Ferramentas de desenvolvimento e testes: Python, Pytest, pytest-cov, Git e demais ferramentas utilizadas são gratuitas e não geram custos diretos.  
+• Banco de dados relacional: será hospedado no Railway, utilizando o mesmo ambiente de nuvem dos microserviços, permitindo consumo e visualização dos dados durante todo o experimento. Esse serviço está incluído no custo de hospedagem já previsto.  
+• Ambiente local dos participantes: não gera custos ao experimento, uma vez que utiliza máquinas e ferramentas já disponíveis aos desenvolvedores.
+
+Fonte de financiamento: os custos de infraestrutura, incluindo o plano de hospedagem no Railway, serão arcados pelo pesquisador responsável, não havendo financiamento externo ou institucional.
+
+Com essa configuração, o orçamento total do experimento permanece reduzido e não representa obstáculo para sua execução.
+
+
 
 
