@@ -20,11 +20,13 @@ EXP-MSD-TU-2025
 | v1.4   | 28/11/2025 | Revisão final com integração dos diagramas conceitual e experimental |
 | v1.5   | 29/11/2025 | Inclusão de dados Pré-execução |
 | v1.6   | 04/12/2025 | Inclusão de ameaças a validade |
+| v2.0   | 05/12/2025 | Conclusao do Trabalho |
+
 
 ### 1.4 Datas  
 
 Criação do plano: 23/11/2025  
-Última atualização: 04/12/2025  
+Última atualização: 05/12/2025  
 
 ### 1.5 Autores  
 
@@ -434,6 +436,453 @@ Os custos previstos são:
 Fonte de financiamento: os custos de infraestrutura, incluindo o plano de hospedagem no Railway, serão arcados pelo pesquisador responsável, não havendo financiamento externo ou institucional.
 
 Com essa configuração, o orçamento total do experimento permanece reduzido e não representa obstáculo para sua execução.
+
+# 16. Cronograma, Marcos e Riscos Operacionais
+
+## 16.1 Macrocronograma (até o início da execução)
+
+O cronograma abaixo apresenta os principais marcos necessários para que o experimento esteja pronto para ser executado. As datas são estimativas realistas, considerando tempo para preparação, revisões e configuração da infraestrutura.
+
+| Marco | Descrição | Data Estimada |
+|-------|-----------|----------------|
+| Conclusão do Plano Experimental | Finalização do documento completo, incluindo validade, ética e orçamento | 05/12/2025 |
+| Configuração do Repositório e Pipelines | Criação da estrutura dos microserviços, GitHub Actions e banco na Railway | 10/12/2025 |
+| Execução de Piloto Técnico | Teste preliminar de uma funcionalidade para validar coleta de métricas | 12/12/2025 |
+| Revisão do Piloto e Ajustes | Correções de logs, ajustes de pipeline e validação da infraestrutura | 15/12/2025 |
+| Reunião de Alinhamento com Participantes | Explicação do fluxo, regras, backlog e consentimento informado | 18/12/2025 |
+| Início Oficial da Sprint 1 | Início da execução real do experimento | 20/12/2025 |
+
+---
+
+## 16.2 Dependências entre atividades
+
+As atividades do experimento possuem dependências diretas que condicionam seu início. Abaixo estão listadas as principais relações:
+
+- A execução do piloto **depende da configuração da infraestrutura técnica** (repositório, CI/CD, banco de dados).
+- A revisão e ajustes do piloto **dependem da análise dos resultados coletados no piloto**.
+- A reunião de alinhamento com participantes **só ocorre após a versão final do plano e a infraestrutura validada pelo piloto**.
+- O início das sprints **depende do consentimento informado** de todos os participantes.
+- A coleta automatizada de métricas **depende da pipeline estar funcional e integrada ao banco no Railway**.
+
+Essas dependências garantem que cada etapa inicie apenas quando os pré-requisitos estiverem completamente preparados.
+
+---
+
+## 16.3 Riscos Operacionais e Plano de Contingência
+
+A seguir, são descritos os principais riscos operacionais associados ao cronograma e à disponibilidade de recursos, bem como as ações planejadas caso tais riscos se materializem.
+
+### 16.3.1 Instabilidade dos Serviços de Hospedagem (Railway e GitHub Actions)
+
+**Risco:** Interrupções ou lentidão podem afetar o tempo de pipeline, introduzindo ruído ou inviabilizando a coleta de métricas.  
+**Mitigação:** Monitoramento constante do status dos serviços; repetição de pipelines afetadas; registro de incidentes.  
+**Contingência:** Migração temporária para ambiente local ou para outro provedor gratuito (Render, Fly.io) caso a instabilidade persista.
+
+---
+
+### 16.3.2 Indisponibilidade de Participantes Durante as Sprints
+
+**Risco:** Ausência de um desenvolvedor pode atrasar a execução das tarefas e comprometer a equivalência entre os grupos.  
+**Mitigação:** Planejamento de janelas flexíveis e comunicação antecipada.  
+**Contingência:** Redistribuição temporária das tarefas dentro da equipe; substituição por outro participante do mesmo nível de senioridade, se disponível.
+
+---
+
+### 16.3.3 Atraso na Configuração da Infraestrutura
+
+**Risco:** Problemas técnicos na configuração do Railway, GitHub Actions ou banco podem atrasar o início do experimento.  
+**Mitigação:** Realizar configuração com antecedência e testar com um piloto técnico.  
+**Contingência:** Simplificar a arquitetura (monorepo temporário, pipelines reduzidas) até que o ambiente completo esteja operacional.
+
+---
+
+### 16.3.4 Falhas na Coleta Automática de Dados
+
+**Risco:** Logs incompletos, falhas nos scripts ou erros de conexão com o banco podem comprometer o dataset.  
+**Mitigação:** Scripts validados no piloto; logging detalhado; testes de integridade periódicos.  
+**Contingência:** Execução manual de coleta corretiva baseada nos logs originais do GitHub Actions e histórico de deploys.
+
+---
+
+### 16.3.5 Atrasos no Cronograma por Sobrecarga do Pesquisador
+
+**Risco:** O pesquisador responsável centraliza múltiplas tarefas (instrumentação, supervisão, análise), o que pode gerar gargalos.  
+**Mitigação:** Planejamento conservador do cronograma; automatização máxima das tarefas de coleta.  
+**Contingência:** Prorrogação de prazos internos ou delegação de tarefas técnicas simples (como revisão de logs).
+
+---
+
+### 16.3.6 Divergência de Entendimento do Backlog Entre os Grupos
+
+**Risco:** Equipes podem interpretar tarefas de forma diferente, quebrando a equivalência experimental.  
+**Mitigação:** Backlog detalhado, checklist por funcionalidade e exemplos claros de aceitação.  
+**Contingência:** Revisão conjunta e redefinição das tarefas antes de retomar a sprint.
+
+---
+
+### 16.3.7 Risco de Perda de Dados no Railway
+
+**Risco:** Quedas ou resets na instância podem resultar em perda parcial de registros.  
+**Mitigação:** Backups automatizados semanais; exportação dos dados após cada sprint.  
+**Contingência:** Recuperação a partir de logs brutos das pipelines, armazenados no GitHub.
+
+---
+
+## 17. Governança do Experimento
+
+A governança estabelece como o experimento será conduzido, supervisionado e mantido antes do início da execução, garantindo rastreabilidade, organização e tomada de decisão clara.
+
+---
+
+### 17.1 Papéis e Responsabilidades Formais
+
+A seguir, apresentam-se os papéis envolvidos e suas responsabilidades formais no experimento:
+
+• Pesquisador responsável  
+  - Define o desenho experimental, conduz ajustes metodológicos e supervisiona todas as etapas.  
+  - Aprova mudanças estruturais no plano.  
+  - Consolida dados, conduz análises e produz os relatórios finais.  
+
+• Desenvolvedores participantes  
+  - Executam as implementações conforme o backlog, gerando dados por meio das pipelines.  
+  - Reportam problemas técnicos ou inconsistências observadas durante o desenvolvimento.  
+
+• Apoio técnico 
+  - Auxilia na preparação do ambiente, configuração das pipelines e integração com o banco de dados.  
+  - Suporta o pesquisador em eventuais ajustes de infraestrutura.  
+
+• Observadores externos 
+  - Não tomam decisões, mas são informados sobre o andamento e podem revisar resultados consolidados.  
+
+Fluxo de responsabilidade 
+- Pesquisador responsável: responsável e aprovador.  
+- Desenvolvedores: executores.  
+- Apoio técnico: consultado quando necessário.  
+- Observadores: informados.
+
+---
+
+### 17.2 Ritos de Acompanhamento Pré-Execução
+
+Antes do início da Sprint 1, serão realizados três tipos de encontros para garantir que o experimento esteja alinhado técnica e operacionalmente:
+
+• Reunião inicial de alinhamento  
+  - Participantes: pesquisador, desenvolvedores e apoio técnico.  
+  - Objetivos: revisar regras do experimento, validar o backlog, apresentar ferramentas e esclarecer dúvidas.  
+  - Realização: uma única vez antes da preparação do ambiente.
+
+• Checkpoints de preparação  
+  - Participantes: pesquisador e apoio técnico.  
+  - Objetivos: validar repositório Git, pipelines, banco de dados no Railway e ambiente Python.  
+  - Frequência: conforme necessidade, até que toda a instrumentação esteja funcional.
+
+• Revisão final pré-execução  
+  - Participantes: pesquisador e desenvolvedores.  
+  - Objetivos: confirmar que todos compreendem o fluxo de trabalho, consentimento informado e forma de registro de ocorrências.  
+  - Realização: imediatamente antes do início da Sprint 1.
+
+Esses ritos garantem que a execução não seja prejudicada por problemas estruturais evitáveis.
+
+---
+
+### 17.3 Processo de Controle de Mudanças no Plano
+
+Alterações no desenho experimental, escopo ou métricas somente poderão ocorrer antes do início da Sprint 1. Mudanças durante a execução serão evitadas, exceto em casos de falhas críticas.
+
+O processo formal segue as etapas abaixo:
+
+1. Proposição  
+   - Qualquer participante pode sugerir uma mudança.  
+   - A proposta deve explicar a necessidade da alteração e o impacto esperado.
+
+2. Análise  
+   - O pesquisador responsável avalia a consistência da proposta, impactos metodológicos e riscos ao estudo.  
+   - Se necessário, o apoio técnico verifica a viabilidade de implementação.
+
+3. Aprovação ou rejeição  
+   - Apenas o pesquisador responsável pode aprovar mudanças no plano.  
+   - Alterações significativas (como mudança de métrica ou protocolo) devem ser registradas no histórico de versões.
+
+4. Registro  
+   - Toda mudança aprovada será documentada no histórico de revisão do plano de experimento.  
+   - O registro incluirá data, descrição, motivação e impacto esperado.
+
+5. Comunicação  
+   - Todas as partes afetadas serão informadas antes que a mudança entre em vigor.
+
+Esse fluxo garante rastreabilidade, evita decisões improvisadas e mantém a confiabilidade metodológica do experimento.
+
+---
+
+# 18. Plano de Documentação e Reprodutibilidade
+
+Esta seção detalha como o experimento será organizado, documentado e disponibilizado de forma que possa ser reproduzido por outras equipes ou replicado futuramente com mínimo esforço adicional.
+
+---
+
+## 18.1 Repositórios e Convenções de Nomeação
+
+Toda a documentação, scripts, instrumentos e dados coletados serão armazenados em um repositório Git público ou privado, organizado de forma padronizada para garantir rastreabilidade e reprodutibilidade.
+
+**Repositório principal do experimento:**
+`experiment-microservices-unittesting-2025`
+
+**Estrutura inicial recomendada:**
+/docs/ → Plano do experimento, anexos e diagramas
+/scripts/ → Scripts de coleta, transformação e análise
+/instrumentation/ → Pipelines, workflows e configurações do CI/CD
+/data_raw/ → Dados brutos coletados automaticamente
+/data_processed/ → Dados tratados para análise
+/templates/ → Questionários, checklists e formulários
+/microservices_base/ → Estrutura inicial padronizada dos microserviços
+/analysis/ → Notebooks ou scripts de análise estatística
+
+
+**Convenções de nomeação:**
+- Arquivos de dados: `metric_<sprint>_<grupo>_<YYYYMMDD>.csv`
+- Scripts: `collect_metrics.py`, `clean_dataset.py`, `analyze_results.py`
+- Relatórios: `report_<versao>.md`
+- Pipelines: `ci_pipeline.yml`, `pytest_pipeline.yml`
+
+A versão final do documento será sempre registrada em `/docs/` com controle de versão Git.
+
+---
+
+## 18.2 Templates e Artefatos Padrão
+
+Os seguintes artefatos serão disponibilizados para garantir consistência entre participantes e replicações futuras:
+
+**1. Formulário de Consentimento Informado**
+- Local: `/templates/consentimento.pdf`
+- Usado antes do início da participação.
+
+**2. Checklists Operacionais**
+- Checklist por funcionalidade da sprint  
+- Checklist de preparação do ambiente  
+- Local: `/templates/checklists/`
+
+**3. Questionários de Percepção**
+- Avaliam confiança, clareza e motivação
+- Aplicados ao final de cada sprint
+- Local: `/templates/questionarios/`
+
+**4. Scripts-padrão**
+- Script para coleta automática: `/scripts/collect_metrics.py`
+- Script de limpeza: `/scripts/clean_dataset.py`
+- Script de análise: `/analysis/stats_mann_whitney.py`
+
+**5. Configuração padrão do Pytest**
+- Arquivo: `/instrumentation/pytest.ini`
+
+**6. Workflow da pipeline**
+- Arquivo: `/instrumentation/ci_pipeline.yml`
+
+Esses artefatos garantem que tanto a execução quanto a futura replicação sigam exatamente o mesmo fluxo.
+
+---
+
+## 18.3 Plano de Empacotamento para Replicação Futura
+
+Para garantir reprodutibilidade, todas as peças do experimento serão empacotadas de forma modular e reutilizável. O pacote de replicação conterá:
+
+### **18.3.1. Documentação Completa**
+- Plano do experimento (versão final)
+- Diagramas conceitual e experimental
+- Procedimentos operacionais detalhados
+- Política de ética e privacidade
+- Guia rápido de execução
+
+### **18.3.2. Ambiente Técnico Reproduzível**
+- Arquivo `requirements.txt` com versões fixas (pinadas)
+- Arquivo `Dockerfile` opcional para execução padronizada dos microserviços
+- Workflow CI/CD pré-configurado
+
+### **18.3.3. Scripts Automatizados**
+- Coleta de métricas
+- Transformação e limpeza dos dados
+- Geração dos datasets finais
+- Execução de testes estatísticos
+
+### **18.3.4. Artefatos Padronizados**
+- Templates de questionários e checklists
+- Estrutura-base dos microserviços
+- Formulários de consentimento
+- Modelo de relatório final
+
+### **18.3.5. Instruções de Replicação**
+Um documento chamado **`REPLICATE.md`** será incluído no repositório contendo:
+- Como clonar o repositório
+- Como configurar o ambiente (local e Railway)
+- Como executar as pipelines
+- Como iniciar as sprints
+- Como coletar e validar dados
+- Como executar a análise estatística
+- Como comparar resultados com o experimento original
+
+Esse empacotamento permitirá que novos pesquisadores repliquem o experimento mesmo anos após sua execução original, garantindo robustez científica e continuidade do estudo.
+
+---
+# 19. Plano de Comunicação
+
+## 19.1 Públicos e Mensagens-Chave Pré-Execução
+
+A comunicação pré-execução tem como objetivo garantir que todos os participantes compreendam o experimento, seu propósito e suas responsabilidades. Os públicos identificados e suas respectivas mensagens-chave são:
+
+### • Participantes 
+- Propósito do experimento.
+- Descrição das atividades que deverão executar.
+- Cronograma geral das sprints.
+- Confirmação de que não haverá avaliação individual de desempenho.
+- Garantia de anonimização e proteção de dados.
+
+### • Pesquisador responsável
+- Confirmação das datas oficiais de início das sprints.
+- Regras para coleta e armazenamento dos dados.
+- Checklist de infraestrutura necessária para a execução.
+
+### • Apoio técnico 
+- Configurações esperadas do repositório, pipelines, banco de dados e ambiente Railway.
+- Deadlines para disponibilização da infraestrutura.
+
+---
+
+## 19.2 Canais e Frequência de Comunicação
+
+A comunicação será realizada por meio de canais digitais de fácil acesso e registro:
+
+| Canal | Uso Principal | Frequência |
+|-------|---------------|------------|
+| E-mail | Comunicados formais, documentação, atualizações importantes | Conforme necessidade (pontos-chave) |
+| Grupo de mensagens (WhatsApp/Telegram) | Comunicação rápida, avisos operacionais, dúvidas | Diária durante as sprints |
+| Reuniões virtuais | Alinhamentos, revisões e esclarecimentos | 1 reunião pré-execução e 1 por sprint |
+| GitHub (issues / README) | Registro técnico, instruções e notificações da pipeline | Contínuo |
+
+---
+
+## 19.3 Pontos de Comunicação Obrigatórios
+
+Alguns eventos exigem comunicação formal e registrada:
+
+1. **Aprovação final do plano de experimento**  
+   Comunicado enviado a todos os participantes confirmando datas, papéis e regras gerais.
+
+2. **Disponibilização da infraestrutura**  
+   Mensagem confirmando que o repositório, pipelines, Railway e banco de dados estão operacionais.
+
+3. **Inicio oficial da Fase de Execução (Sprint 1)**  
+   Comunicação com o marco de partida e responsabilidades de cada participante.
+
+4. **Alterações relevantes no desenho experimental**  
+   - Mudanças no backlog  
+   - Ajustes de métricas  
+   - Alterações nos critérios de coleta  
+   Qualquer alteração deve ser documentada e enviada por e-mail.
+
+5. **Interrupções ou incidentes críticos**  
+   Exemplos: falhas graves no Railway, pipelines inutilizáveis ou perda de dados.
+
+6. **Encerramento da Coleta de Dados**  
+   Comunicado formal registrando o término da fase experimental.
+
+7. **Entrega do Relatório Final**  
+   O pesquisador envia a análise consolidada, resultados estatísticos e conclusões.
+
+---
+
+# 20. Critérios de Prontidão para Execução 
+
+Esta seção define os critérios formais que precisam ser atendidos antes do início da execução do experimento. O objetivo é garantir que todas as condições mínimas de infraestrutura, documentação, comunicação e governança estejam estabelecidas, prevenindo falhas operacionais e riscos metodológicos.
+
+---
+
+## 20.1 Checklist de Prontidão
+
+A execução do experimento somente poderá começar quando **todos os itens abaixo** estiverem concluídos, revisados e aprovados:
+
+### 1. Documentação e Plano Experimental
+- Plano de Experimento finalizado, revisado e aprovado.
+- Modelo conceitual e desenho experimental concluídos e validados.
+- Seções de validade, ética, governança, cronograma e orçamento finalizadas.
+- Todos os instrumentos documentais (consentimento informado, questionários, checklists) concluídos.
+
+### 2. Ambiente Técnico e Infraestrutura
+- Repositório Git criado e acessível aos participantes.
+- Estrutura base dos microserviços Python configurada e idêntica para ambas as equipes.
+- Pipeline de CI/CD no GitHub Actions testada e funcional.
+- Pytest configurado no repositório com coleta de cobertura (pytest-cov).
+- Servidor Railway configurado para hospedagem dos microserviços.
+- Banco de dados PostgreSQL no Railway criado, acessível e com tabelas necessárias para coleta automática de métricas.
+- Scripts de coleta, transformação e consolidação dos dados revisados e testados.
+
+### 3. Participantes e Comunicação
+- Seleção final dos participantes por amostragem estratificada (júnior, pleno, sênior).
+- Alocação aleatória dos participantes em seus respectivos grupos.
+- Comunicação prévia enviada aos desenvolvedores com:
+  - objetivos do experimento  
+  - datas previstas  
+  - responsabilidades  
+  - instruções operacionais  
+- Confirmação de recebimento e entendimento das instruções por todos os participantes.
+
+### 4. Ética e Conformidade
+- Texto de consentimento informado entregue aos participantes.
+- Registro formal do aceite de todos os participantes.
+- Garantias de anonimização e proteção de dados verificadas no banco e na pipeline.
+
+### 5. Operação e Governança
+- Definição do responsável por acompanhar cada sprint.
+- Calendário com marcos, checkpoints e reuniões definido.
+- Fluxo de controle de mudanças estabelecido.
+- Critérios de bloqueio e retomada (go/no-go) documentados.
+
+### 6. Teste Piloto
+- Execução de um piloto técnico contendo:
+  - commit de teste
+  - execução da pipeline
+  - coleta automática de métricas no Railway
+- Verificação de ponta a ponta do fluxo completo (commit → pipeline → microserviço → banco de dados).
+
+---
+
+## 20.2 Aprovações Finais para Iniciar a Operação
+
+Antes do início oficial da Sprint 1, é necessário registrar o aceite formal das seguintes partes:
+
+### 1. Pesquisador Responsável
+Confirma que:
+- todo o plano está completo,
+- infraestrutura foi testada,
+- riscos foram avaliados,
+- participantes estão instruídos.
+
+Registro do aceite:  
+**Assinatura digital ou formulário de confirmação.**
+
+### 2. Participantes do Experimento
+Confirmam que:
+- compreenderam os objetivos,
+- conhecem suas responsabilidades,
+- concordam voluntariamente em participar,
+- entenderam os riscos e garantias de privacidade.
+
+Registro do aceite:  
+**Formulário de consentimento informado.**
+
+### 3. Apoio Técnico (se aplicável)
+Confirma que:
+- ambiente técnico está funcional,
+- pipelines e integrações foram verificadas,
+- servidor Railway está operacional.
+
+Registro do aceite:  
+**Checklist técnico assinado digitalmente.**
+
+---
+
+Após o registro de todas as aprovações, o experimento está oficialmente **“READY”**, autorizado para início da Sprint 1.
+
+
+
 
 
 
