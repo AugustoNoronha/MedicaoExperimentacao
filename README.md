@@ -114,11 +114,15 @@ As questões de pesquisa consideram explicitamente o trade-off entre esforço in
 
 ---
 
-# 4. Escopo e Participantes
+#4. Escopo e Participantes
 
-(… conteúdo preservado …)
+O experimento será conduzido com duas equipes de desenvolvimento, cada uma composta por um desenvolvedor sênior, um desenvolvedor pleno e um desenvolvedor júnior. Ambas as equipes trabalharão sobre um mesmo projeto de backend baseado em microserviços em Python, implementando um conjunto de seis funcionalidades relacionadas à aplicação de lista de tarefas. Essas funcionalidades incluem operações CRUD, gerenciamento de prioridade, data de vencimento e categorização de tarefas, mantendo complexidade equivalente entre as equipes.
 
----
+O escopo operacional abrange três sprints consecutivas, nas quais as mesmas funcionalidades serão implementadas na mesma ordem pelas duas equipes.
+A equipe controle realizará o desenvolvimento sem obrigatoriedade de criação de testes unitários, enquanto a equipe tratamento deverá implementar as mesmas funcionalidades com a obrigatoriedade de criar e manter testes unitários automatizados com cobertura mínima de 70%.
+
+O experimento compreende desenvolvimento, execução de pipelines, coleta de métricas e registro automático dos dados em um banco relacional dedicado.
+O escopo não inclui testes de integração, testes de carga, testes end-to-end ou validações com usuários finais, limitando-se ao estudo do impacto dos testes unitários no fluxo de desenvolvimento interno e na operação das pipelines.
 
 # 5. Instrumentação e Materiais – Versão Final (somente Pytest)
 
@@ -128,12 +132,17 @@ Ambiente padronizado com mesma versão do Python, mesmas bibliotecas e mesmos fr
 
 ---
 
-## 6. Procedimentos Operacionais
+#6. Procedimentos Operacionais
 
-(… conteúdo preservado …)
+O experimento será executado durante três sprints consecutivas de duração equivalente. No início da primeira sprint, cada equipe receberá o backlog contendo as seis funcionalidades a serem implementadas, todas planejadas com complexidade semelhante para reduzir variações operacionais. A ordem das funcionalidades será idêntica para ambas as equipes, garantindo comparabilidade direta entre os resultados obtidos.
 
----
+A equipe controle iniciará o desenvolvimento seguindo seu fluxo usual, sem a obrigatoriedade de escrever testes unitários. Já a equipe tratamento deverá incluir testes unitários automatizados para todas as funcionalidades desenvolvidas, mantendo uma cobertura mínima de 70%, também sujeita à validação automática realizada pela pipeline.
 
+Cada commit acionará a pipeline de integração contínua, registrando automaticamente o tempo de build, a ocorrência de falhas, a cobertura obtida (no caso do grupo tratamento) e os timestamps necessários para o cálculo do lead time por funcionalidade. Ao término de cada sprint, os dados serão consolidados no banco relacional, permitindo verificar evolução e impacto por etapa.
+
+Durante o experimento, a ordem das tarefas não será modificada, e os membros das equipes não serão realocados, garantindo estabilidade no desenho experimental. Ocorrências inesperadas, como ausência de participantes ou falhas de infraestrutura, serão documentadas como ameaças à validade.
+
+Com o final da terceira sprint, o experimento será encerrado e todos os dados coletados estarão disponíveis para análise estatística e interpretação das hipóteses propostas.
 # 7. Modelo Conceitual e Hipóteses
 
 ## 7.1 Modelo Conceitual  
